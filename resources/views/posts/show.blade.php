@@ -1,5 +1,5 @@
 @extends('layouts.master')
 
 @section('content')
-    <p>Place 2 show post</p>
+    <p>Place 1 show post</p>
 @endsection
