@@ -9,7 +9,10 @@
     <form action="/posts" method="post" enctype="multipart/form-data">
         {{ csrf_field() }} <!-- Блокировка внешнего ввода данных/ не с этой стр. -->
         <fieldset>
-        <legend>Add post</legend>
+
+        @include('layouts.errors')
+
+        <!-- <legend>Cоздать пост</legend> -->
         <div class="form-group">
             <label for="__id" class="col-lg-1 control-label">ID</label>
             <div class="col-lg-7">
@@ -54,9 +57,11 @@
                 </div>
             </div>
 
+
         </div>
         </fieldset>
     </form>
+
 
     </div>
 

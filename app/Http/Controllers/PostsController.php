@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Post;
 
@@ -9,19 +10,18 @@ class PostsController extends Controller
 {
     public function index()
     {
+        //Carbon::setLocale('ru');
+        $posts = Post::latest()->get(); // = Post::orderBy('created_at','desc')->get()
+        //dd(compact('posts'));
+        return view('posts.index', compact('posts'));
 
-     //   $posts = Post::all();
-        //return view('post.index', compact('post'));
-        return view('posts.index');
     }
 
-    //public function show(Post $post)
-    public function show()
+    public function show(Post $post)
+    //public function show($id)
     {
-
-        //   $posts = Post::all();
-        //return view('posts.show', compact('post'));
-        return view('posts.show');
+        //$post = Post::find($id);
+        return view('posts.show', compact('post'));
     }
 
     public function create()
@@ -38,6 +38,11 @@ class PostsController extends Controller
                 $post->save();
         Или
          */
+        $this->validate(request(), [
+            'title' => 'required',
+            'body' => 'required',
+        ]);
+
         Post::create(request(['title', 'body']));
 
         return redirect('/');

@@ -14,11 +14,13 @@
 
 Route::get('/', 'PostsController@index');
 Route::get('/posts', 'PostsController@index');
-
-//Route::get('/posts/{post}', 'PostsController@show');
-
-Route::get('/posts/create', 'PostsController@create');
 Route::post('/posts', 'PostsController@store');
+Route::get('/posts/create', 'PostsController@create');
+
+Route::get('/posts/{post}', 'PostsController@show'); // must be last in Routing otherwise will be captcure all dir name, like create
+
+
+
 
 
 
