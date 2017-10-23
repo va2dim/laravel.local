@@ -17,9 +17,13 @@
             <label for="__id" class="col-lg-1 control-label">ID</label>
             <div class="col-lg-7">
                 <input class="form-control" readonly type="number" id="__id" name="__id" placeholder="ID новости" value="">
-
             </div>
-
+<!--
+            <label for="user_id" class="col-lg-1 control-label">ID пользователя</label>
+            <div class="col-lg-7">
+                <input class="form-control" readonly type="number" id="user_id" name="user_id" placeholder="ID пользователя" value="auth()->user->id">
+            </div>
+-->
             <label for="date" class="col-lg-1 col-lg-offset-1 control-label">Дата</label>
             <div class="col-lg-2">
                 <input class="form-control" type="date" id="date" name="date" placeholder="Дата создания/изменения" value="">

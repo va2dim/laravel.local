@@ -8,6 +8,11 @@ use App\Post;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index','show']);
+    }
+
     public function index()
     {
         //Carbon::setLocale('ru');
@@ -21,6 +26,7 @@ class PostsController extends Controller
     //public function show($id)
     {
         //$post = Post::find($id);
+        //dd(bcrypt('213sks'));
         return view('posts.show', compact('post'));
     }
 
@@ -43,7 +49,15 @@ class PostsController extends Controller
             'body' => 'required',
         ]);
 
-        Post::create(request(['title', 'body']));
+        //auth()->user()->publish(new Post(request(['title','body'])));
+
+         //Перенесли логику в user->publish(), т.к. там уже есть связь 'user_id' => auth()->user()->id,
+        Post::create([
+            'title' => request('title'),
+            'body' => request('body'),
+            'user_id' => auth()->user()->id,
+        ]);
+
 
         return redirect('/');
     }
