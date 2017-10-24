@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function publish(Post $post)
     {
-        dd($post);
+        //dd($post);
         $this->post->save($post);
     }
 }

@@ -10,15 +10,24 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except(['index','show']);
+        $this->middleware('auth')->except(['index', 'show']);
     }
 
     public function index()
     {
         //Carbon::setLocale('ru');
-        $posts = Post::latest()->get(); // = Post::orderBy('created_at','desc')->get()
-        //dd(compact('posts'));
-        return view('posts.index', compact('posts'));
+        $posts = Post::latest()
+            ->filter(request(['month', 'year']))
+            ->get();
+
+
+        $archives = Post::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
+            ->groupBy('year', 'month')
+            ->orderByRaw('min(created_at) desc')
+            ->get();
+            //->toArray();
+        //dd($archives);
+        return view('posts.index', compact('posts', 'archives'));
 
     }
 
