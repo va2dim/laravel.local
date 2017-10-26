@@ -16,19 +16,12 @@ class PostsController extends Controller
     public function index()
     {
         //Carbon::setLocale('ru');
+
         $posts = Post::latest()
             ->filter(request(['month', 'year']))
             ->get();
 
-
-        $archives = Post::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
-            ->groupBy('year', 'month')
-            ->orderByRaw('min(created_at) desc')
-            ->get();
-            //->toArray();
-        //dd($archives);
-        return view('posts.index', compact('posts', 'archives'));
-
+        return view('posts.index', compact('posts'));
     }
 
     public function show(Post $post)
@@ -36,6 +29,7 @@ class PostsController extends Controller
     {
         //$post = Post::find($id);
         //dd(bcrypt('213sks'));
+
         return view('posts.show', compact('post'));
     }
 
