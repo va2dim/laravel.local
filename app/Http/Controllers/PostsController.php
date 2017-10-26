@@ -17,6 +17,7 @@ class PostsController extends Controller
     {
         //Carbon::setLocale('ru');
 
+
         $posts = Post::latest()
             ->filter(request(['month', 'year']))
             ->get();

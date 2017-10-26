@@ -16,11 +16,10 @@ class AppServiceProvider extends ServiceProvider
     {
 	    Schema::defaultStringLength(191); // fix 4 artisan migrate
 
-/*
         view()->composer('layouts.sidebar', function($view) {
             $view->with('archives', \App\Post::archives());
         });
-*/
+
     }
 
     /**

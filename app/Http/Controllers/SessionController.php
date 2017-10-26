@@ -24,7 +24,9 @@ class SessionController extends Controller
                 'message' => 'Проверьте вводимые данные'
             ]);
         }
-        return redirect()->home();
+        return redirect()->back(302,['Location: /about'], false);
+
+        return redirect()->back();
     }
 
     public function destroy()
