@@ -18,8 +18,18 @@ Route::post('/posts', 'PostsController@store');
 Route::get('/posts/create', 'PostsController@create');
 
 Route::get('/posts/{post}', 'PostsController@show'); // must be last in Routing otherwise will be captcure all dir name, like create
-
 Route::post('/posts/{post}/comments', 'CommentsController@store');
+
+Route::get('/quotes', 'QuotesController@index');
+Route::get('/quotes/create', 'QuotesController@create');
+Route::get('/quotes/{quote}', 'QuotesController@show');
+Route::post('/quotes', 'QuotesController@store');
+
+Route::get('/hubs', 'CategoriesController@index');
+Route::get('/hubs/create', 'CategoriesController@create');
+Route::get('/hubs/{hub}', 'CategoriesController@show');
+Route::post('/hubs', 'CategoriesController@store');
+
 
 //Route::get('/register', 'AuthController@register');
 Route::get('/register', 'RegistrationController@create');

@@ -136,11 +136,13 @@ h6,
 /* Pagination */
 
 .blog-pagination {
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
+  margin-top: 1rem;
 }
 
-.blog-pagination > .btn {
+.blog-pagination .btn {
   border-radius: 2rem;
+  margin-right: 0.25rem;
 }
 
 /*
@@ -175,5 +177,17 @@ h6,
 
 .blog-footer p:last-child {
   margin-bottom: 0;
+}
+
+/*
+ * Blog Quotes
+ */
+
+.blog-quote {
+  position: relative;
+  border: 1px;
+  display: inline-block;
+  background-color: #e5e5e5;
+  padding: 1rem;
 }
 

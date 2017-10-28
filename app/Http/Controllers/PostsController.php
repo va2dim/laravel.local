@@ -11,6 +11,7 @@ class PostsController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except(['index', 'show']);
+
     }
 
     public function index()
@@ -20,7 +21,7 @@ class PostsController extends Controller
 
         $posts = Post::latest()
             ->filter(request(['month', 'year']))
-            ->get();
+            ->simplePaginate(1);
 
         return view('posts.index', compact('posts'));
     }

@@ -9,8 +9,7 @@
             @endforeach
 
                 <nav class="blog-pagination">
-                    <a class="btn btn-outline-primary" href="#">Старые</a>
-                    <a class="btn btn-outline-secondary disabled" href="#">Новые</a>
+                    {{ $posts->links() }} <!-- change blg.css .blog-pagination > .btn to .btn, +add margin-right: 0.25rem -->
                 </nav>
 
             </div><!-- /.blog-main -->
