@@ -9,7 +9,7 @@
                     <div class="row">
                     @foreach($quotes_chunk as $quote)
                             <div class="col-sm-6">
-                        @include('quotes.post')
+                                @include('quotes.post')
                             </div>
                     @endforeach
                     </div>
@@ -18,7 +18,7 @@
             @endforeach
 
                 <nav class="blog-pagination">
-                    {{ $quotes->links('vendor\pagination\simple-bootstrap-4') }} <!-- or use simple-default - $quotes->links() 4 round btn -->
+                    {{ $quotes->appends($_REQUEST)->links('vendor\pagination\simple-bootstrap-4') }} <!-- or use simple-default - $quotes->links() 4 round btn -->
                 </nav>
             </div>
             <!-- /.blog-main -->

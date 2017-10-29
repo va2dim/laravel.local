@@ -21,4 +21,22 @@ class Quote extends Model
     {
         return $this->belongsTo(Source::class)->withDefault();
     }
+
+
+    public function scopeFilter($query, $filters)
+    {
+        if(!empty($filters)) {
+            if (!empty($filters['author'])) {
+                $query->where('author_id', '=', $filters['author']);
+            }
+
+            if (!empty($filters['source'])) {
+                $query->where('source_id', '=', $filters['source']);
+            }
+
+            if (!empty($filters['publicate_at'])) {
+                //$query->whereYear('publicate_at', $date);
+            }
+        }
+    }
 }

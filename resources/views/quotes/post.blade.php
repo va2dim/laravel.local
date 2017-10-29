@@ -1,13 +1,21 @@
 <div class="card">
-    <div class="card-heading">
-        <h4 class="card-title"><a href="quotes\{{ $quote->id }}">{{ $quote->title }}</a></h4>
-    </div>
+    @if ($quote->title)
+        <div class="card-header">
+            <h4 class="card-title"><a href="quotes\{{ $quote->id }}">{{ $quote->title }}</a></h4>
+        </div>
+    @endif
     <div class="card-body">
-        {{ $quote->body }}
+        <blockquote class="blockquote mb-0">
+            <p>{{ $quote->body }}</p>
+            @if ($quote->source_id)
+                <footer class="blockquote-footer">
+                    <a href="/quotes/?source={{ $quote->source_id }}">{{ $quote->source->item}}</a>.
+                    <a class="card-link" href="/quotes/?author={{ $quote->author_id }}">{{ $quote->author->name }}</a>
+                </footer>
+            @endif
+        </blockquote>
     </div>
     <div class="card-footer">
-        <a href="/quotes/?author{{ $quote->author->id }}">{{ $quote->author->name }}</a>.
-        <a href="{{ $quote->source_id }}">{{ $quote->source->item}}</a>
         Опубликовать {{ $quote->publicate_at }}
     </div>
 </div><!-- /.blog-quote  ->toFormattedDateString()-->
