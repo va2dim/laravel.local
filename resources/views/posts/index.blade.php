@@ -9,7 +9,7 @@
             @endforeach
 
                 <nav class="blog-pagination">
-                    {{ $posts->links() }} <!-- change blg.css .blog-pagination > .btn to .btn, +add margin-right: 0.25rem -->
+                    {{ $posts->appends($_REQUEST)->links() }} <!-- change blg.css .blog-pagination > .btn to .btn, +add margin-right: 0.25rem -->
                 </nav>
 
             </div><!-- /.blog-main -->

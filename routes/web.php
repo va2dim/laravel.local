@@ -21,9 +21,9 @@ Route::get('/posts/{post}', 'PostsController@show'); // must be last in Routing 
 Route::post('/posts/{post}/comments', 'CommentsController@store');
 
 Route::get('/quotes', 'QuotesController@index');
+Route::post('/quotes', 'QuotesController@store');
 Route::get('/quotes/create', 'QuotesController@create');
 Route::get('/quotes/{quote}', 'QuotesController@show');
-Route::post('/quotes', 'QuotesController@store');
 
 Route::get('/hubs', 'CategoriesController@index');
 Route::get('/hubs/create', 'CategoriesController@create');

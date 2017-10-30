@@ -34,7 +34,7 @@
                 <input class="form-control" type="text" id="title" name="title" placeholder="Краткий заголовок" value="">
             </div>
 
-            <label for="text" class="col-lg-1 control-label">Текст</label>
+            <label for="body" class="col-lg-1 control-label">Текст</label>
             <div class="col-lg-11">
                 <textarea class="form-control" id="body" name="body"></textarea>
             </div>

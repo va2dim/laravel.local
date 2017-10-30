@@ -31,9 +31,9 @@
 
 
 
-            <label for="category" class="col-lg-1 control-label">Жанр</label>
+            <label for="hub" class="col-lg-1 control-label">Жанр</label>
             <div class="col-lg-11">
-                <input class="form-control" type="text" id="category" name="category" placeholder="Жанр/категория/хаб" value="">
+                <input class="form-control" type="text" id="hub" name="hub" placeholder="Жанр/категория/хаб" value="">
             </div>
 
             <label for="title" class="col-lg-1 control-label">Заголовок</label>
@@ -41,7 +41,7 @@
                 <input class="form-control" type="text" id="title" name="title" placeholder="Заголовок" value="">
             </div>
 
-            <label for="text" class="col-lg-1 control-label">Текст</label>
+            <label for="body" class="col-lg-1 control-label">Текст</label>
             <div class="col-lg-11">
                 <textarea class="form-control" id="body" name="body"></textarea>
             </div>

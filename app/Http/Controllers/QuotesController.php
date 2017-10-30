@@ -34,16 +34,20 @@ class QuotesController extends Controller
 
     public function store()
     {
+        //dd(request('body'));
+        //dd($_REQUEST);
+
         $this->validate(request(), [
             'body' => 'required',
         ]);
 
-        //dd($_REQUEST);
         Quote::create([
             'title' => request('title'),
             'body' => request('body'),
             'author_id' => request('author'),
-            'publicated_at' => request('publicated_at'),
+            'source_id' => request('source'),
+            'category_id' => request('hub'),
+            'publicate_at' => request('publicate_at'),
         ]);
 
         return redirect('/quotes');
