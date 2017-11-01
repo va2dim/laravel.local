@@ -191,3 +191,34 @@ h6,
   padding: 1rem;
 }
 
+#flash-msg {
+  position: absolute;
+  z-index: 10;
+  top: 100px;
+  right: 100px;
+  -webkit-animation: flash-msg 4s forwards;
+          animation: flash-msg 4s forwards;
+}
+
+@-webkit-keyframes flash-msg {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes flash-msg {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+

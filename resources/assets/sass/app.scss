@@ -183,3 +183,21 @@ h6,
   background-color: #e5e5e5;
   padding: 1rem;
 }
+
+#flash-msg { //for flash message after successful registration of user
+  position: absolute;
+  z-index: 10;
+  top: 100px;
+  right: 100px;
+  animation: flash-msg 4s forwards;
+}
+
+@keyframes flash-msg {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}

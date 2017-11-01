@@ -33,7 +33,8 @@ class RegistrationController extends Controller
         //auth() - helper f 4 \Auth::login();
         auth()->login($user);
 
-        \Mail::to($user)->send(new WelcomeMarkdown($user));
+        \Mail::to($user)->send(new Welcome($user)); //Welcome & flash msg
+        session()->flash('msg', 'Спасибо за регистрацию '.$user->name.', на ваш почтовый ящик отправлено письмо приветсвия!');
 
         return redirect()->home();
     }
