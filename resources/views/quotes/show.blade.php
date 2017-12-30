@@ -11,6 +11,9 @@
                 <a href="{{ $quote->author->id }}">{{ $quote->author->name }}</a>.
                 <a href="{{ $quote->source_id }}">{{ $quote->source->item}}</a>
                 (<a href="/author/category/{{ $quote->author->category->id}}">{{ $quote->author->category->title }}</a>)
+
+                <a href="/quotes/{{$quote->id}}/edit"><span class="oi oi-pencil" title="Редактировать" aria-hidden="true"  aria-label="Редактировать"></span></a>
+                <a href="/quotes/{{$quote->id}}/delete"><span class="oi oi-delete" title="Удалить" aria-hidden="true" aria-label="Удалить"></span></a>
             </p>
         </div><!-- /.blog-post -->
 

@@ -8,13 +8,21 @@ use Carbon\Carbon;
 class Post extends Model
 {
 
+
     public static function archives()
     {
-        return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
+        $dt = static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
             ->groupBy('year', 'month')
             ->orderByRaw('min(created_at) desc')
             ->get();
             //->toArray();
+
+        return $dt;
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
     public function comments()
@@ -43,6 +51,7 @@ class Post extends Model
     {
         if(!empty($filters)) {
             if ($month = $filters['month']) {
+
                 $query->whereMonth('created_at', Carbon::parse($month)->month);
             }
 

@@ -16,13 +16,10 @@ class PostsController extends Controller
 
     public function index()
     {
-        //Carbon::setLocale('ru');
-
-
         $posts = Post::latest()
             ->filter(request(['month', 'year']))
             ->simplePaginate(2);
-
+//        dd($posts);
         return view('posts.index', compact('posts'));
     }
 
@@ -36,6 +33,12 @@ class PostsController extends Controller
     }
 
     public function create()
+    {
+
+        return view('posts.create');
+    }
+
+    public function edit()
     {
 
         return view('posts.create');

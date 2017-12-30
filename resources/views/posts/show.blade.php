@@ -1,12 +1,21 @@
 @extends('layouts.master')
 
 @section('content')
-
     <div class="col-sm-8 blog-main">
         <div class="blog-post">
             <h2 class="blog-post-title">{{ $post->title }}</h2>
-            <p class="blog-post-meta">{{ $post->created_at->diffForHumans() }} оставлен <a href="/users/{{ $post->user->id }}">{{ $post->user->name }}</a></p>
+            <p class="blog-post-meta d-flex">
+                <span class="mr-auto">
+                {{ $post->created_at->diffForHumans() }} оставлен <a href="/users/{{ $post->user->id }}">{{ $post->user->name }}</a>&nbsp;&nbsp;
+                <a href="/posts/{{$post->id}}/edit"><span class="oi oi-pencil" title="Редактировать" aria-hidden="true" aria-label="Редактировать"></span></a>
+                <a href="/posts/{{$post->id}}/delete"><span class="oi oi-delete" title="Удалить" aria-hidden="true" aria-label="Удалить"></span></a>
+                </span>
+                @foreach ($post->tags as $tag)
+                    <a class="" href="/posts/tags/{{ $tag->name }}">{{ $tag->name }}</a>&nbsp;
+                @endforeach
+            </p>
             <div>{{ $post->body }}</div>
+
         </div><!-- /.blog-post -->
 
 

@@ -2,10 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
 
 class Source extends Model
 {
+
+    public $timestamps = false;
 
     public function category()
     {
