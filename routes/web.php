@@ -15,8 +15,7 @@
 Route::get('/', 'PostsController@index')->name('home');
 Route::get('/posts', 'PostsController@index');
 Route::post('/posts', 'PostsController@store');
-Route::get('/posts/create', 'PostsController@create');
-Route::get('/posts/edit/{post}', 'PostsController@edit');
+Route::get('/posts/create', 'PostsController@update');
 
 Route::get('/authors/create', 'AuthorsController@create');
 Route::post('/authors', 'AuthorsController@store');
@@ -26,6 +25,8 @@ Route::get('/tags/{tag}', 'TagsController@index');
 Route::get('/posts/tags/{tag}', 'TagsController@index');
 Route::get('/posts/{post}', 'PostsController@show'); // must be last in Routing otherwise will be captcure all dir name, like create
 Route::post('/posts/{post}/comments', 'CommentsController@store');
+Route::get('/posts/{post}/edit', 'PostsController@update');
+Route::get('/posts/{post}/delete', 'PostsController@destroy');
 
 Route::get('/quotes', 'QuotesController@index');
 Route::post('/quotes', 'QuotesController@store');

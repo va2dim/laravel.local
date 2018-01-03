@@ -13,7 +13,7 @@
                 (<a href="/author/category/{{ $quote->author->category->id}}">{{ $quote->author->category->title }}</a>)
 
                 <a href="/quotes/{{$quote->id}}/edit"><span class="oi oi-pencil" title="Редактировать" aria-hidden="true"  aria-label="Редактировать"></span></a>
-                <a href="/quotes/{{$quote->id}}/delete"><span class="oi oi-delete" title="Удалить" aria-hidden="true" aria-label="Удалить"></span></a>
+                <a href="/quotes/{{$quote->id}}/delete"><span class="oi oi-x" title="Удалить" aria-hidden="true" aria-label="Удалить"></span></a>
             </p>
         </div><!-- /.blog-post -->
 

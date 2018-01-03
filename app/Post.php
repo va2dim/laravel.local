@@ -35,7 +35,7 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function AddComment($body)
+    public function AddComment($user_id, $body)
     {
 /*
         Comment::create([
@@ -44,7 +44,7 @@ class Post extends Model
         ]);
 */
         //Eloquent have relationship - give you post_id, we can rewrite this more simple
-        $this->comments()->create(compact('body'));
+        $this->comments()->create(compact('user_id', 'body'));
     }
 
     public function scopeFilter($query, $filters)

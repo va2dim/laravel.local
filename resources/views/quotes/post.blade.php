@@ -20,6 +20,6 @@
     <div class="card-footer">
         Опубликовать {{ $quote->publicate_at }}
         <a href="/quotes/{{$quote->id}}/edit"><span class="oi oi-pencil" title="Редактировать" aria-hidden="true"  aria-label="Редактировать"></span></a>
-        <a href="/quotes/{{$quote->id}}/delete"><span class="oi oi-delete" title="Удалить" aria-hidden="true" aria-label="Удалить"></span></a>
+        <a href="/quotes/{{$quote->id}}/delete"><span class="oi oi-x" title="Удалить" aria-hidden="true" aria-label="Удалить"></span></a>
     </div>
 </div><!-- /.blog-quote  ->toFormattedDateString()-->
