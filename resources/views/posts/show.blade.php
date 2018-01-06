@@ -1,18 +1,16 @@
 @extends('layouts.master')
 
 @section('content')
-    <div class="col-sm-8 blog-main">
+
         <div class="blog-post">
             <h2 class="blog-post-title">{{ $post->title }}</h2>
             <p class="blog-post-meta d-flex">
                 <span class="mr-auto">
                 {{ $post->created_at->diffForHumans() }} оставлен <a href="/users/{{ $post->user->id }}">{{ $post->user->name }}</a>&nbsp;&nbsp;
-                <a href="/posts/{{ $post->id }}/edit"><span class="oi oi-pencil" title="Редактировать" aria-hidden="true" aria-label="Редактировать"></span></a>
-                <a href="/posts/{{ $post->id }}/delete"><span class="oi oi-x" title="Удалить" aria-hidden="true" aria-label="Удалить"></span></a>
+                <a href="/posts/{{ $post->slug }}/edit"><span class="oi oi-pencil" title="Редактировать" aria-hidden="true" aria-label="Редактировать"></span></a>
+                <a href="/posts/{{ $post->slug }}/delete"><span class="oi oi-x" title="Удалить" aria-hidden="true" aria-label="Удалить"></span></a>
                 </span>
-                @foreach ($post->tags as $tag)
-                    <a href="/posts/tags/{{ $tag->name }}">{{ $tag->name }}</a>&nbsp;
-                @endforeach
+
             </p>
             <div>{{ $post->body }}<br>
                 @if ($post->images)
@@ -21,7 +19,11 @@
                     @endforeach
                 @endif
             </div>
-
+            <span>
+                @foreach ($post->tags as $tag)
+                    <a href="/posts/tags/{{ $tag->name }}">{{ $tag->name }}</a>&nbsp;
+                @endforeach
+            </span>
         </div><!-- /.blog-post -->
 
 
@@ -29,12 +31,29 @@
         <hr>
         <div class="blog-comments">
             <ul class="list-group">
+                @php
+                    $parent_id = 0;
+                    $level = 0;
+                @endphp
             @foreach ($post->comments as $comment)
-                <li  class="list-group-item">
-                    <p class="blog-post-meta">{{ $comment->created_at->diffForHumans() }} оставлен <a href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a></p>
-                    <div class="blog-post-comment">{{ $comment->body }}</div>
+
+
+
+                    @if (null == $comment->parent_id)
+                        <li class="list-group-item">
+                    @elseif ($parent_id = $comment->parent_id)
+                                @php ($level++)
+                        <li class="list-group-item" style="margin-left:{{ $level*10 }}px;">
+                    @endif
+                    <div class="blog-post-comment">
+                        <p class="blog-post-meta">{{ $comment->created_at->diffForHumans() }} оставлен <a href="/users/{{ $comment->user->id }}">{{ $comment->user->name }}</a></p>
+                        <p>{{ $comment->body }}</p>
+                    </div>
                 </li>
+                @php ($parent_id = $comment->parent_id)
+
             @endforeach
+            </ul>
         </div><!-- /.blog-comments -->
 @endif
 
@@ -44,10 +63,5 @@
         @else
             <div><a href="/login">Войдите</a> на сайт или <a href="/register">зарегистрируйтесь</a>, чтобы иметь возможность оставлять свои комментарии</div>
         @endif
-
-
-
-    </div><!-- /.blog-main -->
-
 
 @endsection

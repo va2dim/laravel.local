@@ -4,10 +4,12 @@ namespace App;
 
 
 use Carbon\Carbon;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Post extends Model
 {
 
+    use Sluggable;
 
     public static function archives()
     {
@@ -23,6 +25,7 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+        //return $this->belongsToMany(Tag::class, 'post_tags', 'post_id', 'tag_id'); что даст указание доп параметров?
     }
 
     public function comments()
@@ -30,12 +33,18 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function user()
+    public function user() // change2 author
     {
         return $this->belongsTo(User::class);
     }
 
-    public function AddComment($user_id, $body)
+
+    public function category()
+    {
+        return $this->BelongsTo(Category::class)->withDefault(); //withDefault() ?
+    }
+
+    public function AddComment($user_id,  $body)
     {
 /*
         Comment::create([
@@ -60,4 +69,36 @@ class Post extends Model
             }
         }
     }
+
+    public function fileUpload(Request $request, $uploaded_files_path)
+    {
+
+        if ($request->hasFile('images')) {
+            if ($old_images = Post::find(request('id'))->images) {
+                foreach (unserialize($old_images) as $old_image) {
+                    unlink($uploaded_files_path.'/'.$old_image); // При upload устанавливается simlink?
+                    Storage::delete($uploaded_files_path.'/'.$old_image); // TODO не отрабатывает удаление файла, удалить сразу массив imgs, это же добавить в удаление поста
+                }
+            }
+
+            foreach ($files as $file) {
+                $images[] = time() . '_' . $file->getClientOriginalName();
+                $file->move($uploaded_files_path, last($images));
+            }
+
+        }
+
+        return $images;
+    }
+
+    public function sluggable()
+    {
+
+        return [
+          'slug' => [
+            'source' => 'title'
+          ]
+        ];
+    }
+
 }

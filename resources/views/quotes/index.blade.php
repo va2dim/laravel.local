@@ -2,8 +2,6 @@
 
 @section ('content')
 
-
-            <div class="col-sm-8 blog-main">
             @foreach($quotes->chunk(2) as $quotes_chunk)
                     <div class="container">
                     <div class="row">
@@ -17,12 +15,8 @@
 
             @endforeach
 
-                <nav class="blog-pagination">
-                    {{ $quotes->appends($_REQUEST)->links('vendor\pagination\simple-bootstrap-4') }} <!-- or use simple-default - $quotes->links() 4 round btn -->
-                </nav>
-            </div>
-            <!-- /.blog-main -->
-
-
+            <nav class="blog-pagination">
+                {{ $quotes->appends($_REQUEST)->links('vendor\pagination\simple-bootstrap-4') }} <!-- or use simple-default - $quotes->links() 4 round btn -->
+            </nav>
 
 @endsection

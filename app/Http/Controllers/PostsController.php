@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 //use Illuminate\Validation\Rule;
+use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class PostsController extends Controller
 {
@@ -18,21 +20,29 @@ class PostsController extends Controller
 
     public function index()
     {
+/*
+        $parent_id = [null, 2];
+        dd(array_random($parent_id));
+*/
+
         $posts = Post::latest()
             ->filter(request(['month', 'year']))
-            ->simplePaginate(7);
+            ->simplePaginate(5);
 //        dd($posts);
         return view('posts.index', compact('posts'));
     }
 
-    public function show(Post $post)
+    public function show($post_slug)
     {
+        $post = Post::where('slug', $post_slug)->first();
 
         return view('posts.show', compact('post'));
     }
 
-    public function update(Post $post)
+    public function update($post_slug)
     {
+        $post = Post::where('slug', $post_slug)->first();
+
         if (!isset($post)) {
             if (auth()->user()->name == $post->user->name) {
                 return view('posts.update', compact('post'));
@@ -53,43 +63,69 @@ class PostsController extends Controller
             'body' => 'required',
         ]);
 
-
+//dd($request);
 
         //$images = \Input::file('image');
-
-
         //auth()->user()->publish(new Post(request(['title','body'])));
         //Перенесли логику в user->publish(), т.к. там уже есть связь 'user_id' => auth()->user()->id,
 
-        // Обработка ошибки превышения размера файла
-        //$files = $request->file('images');
-        $files = app('request')->file('images');
+        // Обработка ошибки превышения размера файла upload_max_filesize php.ini directive (default limit is 2048 KiB).
+        $files = $request->file('images');
+
+        //dd($files);
         foreach ($files as $file){
             if ($file->getError()) {
-                dd($file->getErrorMessage());
+                return redirect()->back()->withErrors($file->getErrorMessage());
             }
         }
-        //dd($request->all());
-        //dd($request->file('images'));
+
 
 //TODO вынести в public function fileUpload(Request $request)
 
         if ($request->hasFile('images')) {
-//dd($files);
+
+
+
+            /*
             $validator = Validator::make(compact('files'), [
-              'files' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+              'files' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
             ]);
-            //$valid = app('validator')->make(compact('files'),['files'=>'required']);
-
+            */
             //$validator->each($files, 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048');
-            //$validator->passes();
 
-            $destinationPath = public_path('/images');
-            //$images[] = $destinationPath;
-            foreach ($files as $file) {
-                $images[] = time() . '_' . $file->getClientOriginalName();
-                $file->move($destinationPath, last($images));
+            $validator = Validator::make(compact('files'), [
+              'files' => 'required|array'
+            ]);
+
+            foreach($files as $file) {
+                $validator = Validator::make(compact('file'), [
+                  'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
+                ]);
+
+                if ($validator->fails()) {
+                    return redirect()->back()->withErrors($validator);
+                }
             }
+//TODO Если первый файл прошел валидацию обновить модель
+
+            if ($old_images = Post::find(request('id'))->images) {
+                foreach (unserialize($old_images) as $old_image) { // проверка на существование файла
+                    if (file_exists(public_path('images/'.$old_image))) {
+                        unlink(public_path('images/' . $old_image)); // При upload устанавливается simlink?
+                        Storage::delete(public_path('images/' . $old_image)); // TODO не отрабатывает удаление файла, удалить сразу массив imgs, это же добавить в удаление поста
+                    }
+                }
+            }
+
+            foreach ($files as $file) {
+                $file_name = $file->getClientOriginalName();
+                $file_name = substr($file_name, 0, strpos($file_name, '.', -4));
+                $slug = SlugService::createSlug(\App\Post::class, 'slug', $file_name);
+                $images[] = time() . '_' . $slug. '.' . $file->extension();
+                $file->move(public_path('images'), last($images));
+            }
+
+            session()->flash('msg', 'Файлы '.implode(', ', $images).' были успешно загружены');
 
             //$path = $request->images->store('images', 's3');
             //$images_arr = serialize($images);
@@ -107,8 +143,10 @@ class PostsController extends Controller
         return redirect('/');
     }
 
-    public function destroy(Post $post)
+    public function destroy($post_slug)
     {
+        $post = Post::where('slug', $post_slug)->first();
+        //TODO при удалении поста, удалять его картинки также
         Post::destroy($post->id);
 
         return redirect('/');

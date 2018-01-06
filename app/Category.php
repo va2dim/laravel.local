@@ -3,9 +3,12 @@
 namespace App;
 
 //use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Category extends Model
 {
+
+    use Sluggable;
 
     public $timestamps = false;
 
@@ -16,6 +19,21 @@ class Category extends Model
 
     public function quotes()
     {
-        return $this->hasMany(Author::class);
+        return $this->hasMany(Quote::class);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function sluggable()
+    {
+
+        return [
+          'slug' => [
+            'source' => 'title'
+          ]
+        ];
     }
 }

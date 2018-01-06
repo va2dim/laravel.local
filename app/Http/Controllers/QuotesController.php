@@ -6,6 +6,7 @@ use App\Category;
 use App\Quote;
 use App\Author;
 use App\Source;
+use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
 
 class QuotesController extends Controller
@@ -19,6 +20,15 @@ class QuotesController extends Controller
 
     public function index()
     {
+        $tags = ['йога', 'аюрведа', 'суфизм'];
+
+        foreach(range(0, 2) as $i) {
+            $name = $tags[$i];
+            $slug = SlugService::createSlug(\App\Tag::class, 'slug', $name);
+            echo $name.$slug."<br>";
+        }
+
+        die;
         $quotes = Quote::latest('publicate_at')
             ->filter(request(['author', 'hubs', 'source', 'publicate_at']))
             ->simplePaginate(4);
@@ -59,6 +69,7 @@ class QuotesController extends Controller
           [
             'user_id' => auth()->user()->id,
             'title' => request('title'),
+            'slug' => request('title'),
             'body' => request('body'),
             'author_id' => request('author'),
             'source_id' => request('source'),

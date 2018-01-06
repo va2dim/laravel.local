@@ -2,8 +2,6 @@
 
 @section('content')
 
-    <div class="col-sm-8 blog-main">
-
     <h1>
         @if(!empty($quote->id))
             Обновить
@@ -13,7 +11,7 @@
             цитату
     </h1>
 
-        <div class="alert alert-danger print-error-msg" style="display:none"></div>
+    <div class="alert alert-danger print-error-msg" style="display:none"></div>
 
     <form action="/quotes" method="post" enctype="multipart/form-data">
         {{ csrf_field() }} <!-- Блокировка внешнего ввода данных/ не с этой стр. -->
@@ -119,7 +117,6 @@
     </form>
 
 
-    </div>
 
     <script type="text/javascript">
 /*

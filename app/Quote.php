@@ -2,9 +2,13 @@
 
 namespace App;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Quote extends Model
 {
+
+    use Sluggable;
+
     public $timestamps = false;
 
     public function author()
@@ -39,4 +43,15 @@ class Quote extends Model
             }
         }
     }
+
+    public function sluggable()
+    {
+
+        return [
+          'slug' => [
+            'source' => 'title'
+          ]
+        ];
+    }
+
 }

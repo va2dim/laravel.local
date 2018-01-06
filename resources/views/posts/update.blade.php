@@ -2,9 +2,13 @@
 
 @section('content')
 
-    <div class="col-sm-8 blog-main">
-
-    <h1>Cоздать пост</h1>
+    <h1>
+        @if(!empty($post->id))
+            Обновить
+        @else
+            Создать
+        @endif
+     пост</h1>
 
     <form action="/posts" method="post" enctype="multipart/form-data">
         {{ csrf_field() }} <!-- Блокировка внешнего ввода данных/ не с этой стр. -->
@@ -51,9 +55,11 @@
                 <!-- Поле MAX_FILE_SIZE должно быть указано до поля загрузки файла -->
                 <input type="hidden" name="MAX_FILE_SIZE" value="2097152" />
                 <!-- Название элемента input определяет имя в массиве $_FILES -->
-                @foreach (unserialize($post->images) as $image)
-                    <img src="{{ asset('images/'.$image) }}" height="100">
-                @endforeach
+                @if($post->images)
+                    @foreach (unserialize($post->images) as $image)
+                        <img src="{{ asset('images/'.$image) }}" height="100">
+                    @endforeach
+                @endif
 
 
                 <input class="form-control" type="file" accept="image/jpeg,image/png,image/gif" id="images" name="images[]" value="" alt="Картинка">
@@ -78,8 +84,5 @@
         </div>
         </fieldset>
     </form>
-
-
-    </div>
 
 @endsection

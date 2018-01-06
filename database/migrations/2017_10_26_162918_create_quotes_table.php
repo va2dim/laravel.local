@@ -17,10 +17,12 @@ class CreateQuotesTable extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id'); // Только зарег. пользователь может изменять цитаты
             $table->integer('author_id')->nullable();
             $table->integer('category_id')->nullable(); // quote_category
             $table->integer('source_id')->nullable();
             $table->string('title')->nullable();
+            $table->string('slug');
             $table->text('body');
             $table->date('publicate_at');
             $table->integer('commentary_id')->nullable(); // Для добавления коммента к цитате использовать полиморф. табл.
@@ -37,6 +39,12 @@ class CreateQuotesTable extends Migration
             $table->integer('category_id');
             $table->string('item');
         });
+
+        Schema::create('quote_tag', function (Blueprint $table) {
+            $table->integer('quote_id');
+            $table->integer('tag_id');
+            $table->primary(['quote_id', 'tag_id']);
+        });
     }
 
     /**
@@ -49,5 +57,6 @@ class CreateQuotesTable extends Migration
         Schema::dropIfExists('quotes');
         Schema::dropIfExists('authors');
         Schema::dropIfExists('sources');
+        Schema::dropIfExists('quote_tag');
     }
 }

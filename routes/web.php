@@ -21,12 +21,13 @@ Route::get('/authors/create', 'AuthorsController@create');
 Route::post('/authors', 'AuthorsController@store');
 
 
-Route::get('/tags/{tag}', 'TagsController@index');
-Route::get('/posts/tags/{tag}', 'TagsController@index');
-Route::get('/posts/{post}', 'PostsController@show'); // must be last in Routing otherwise will be captcure all dir name, like create
-Route::post('/posts/{post}/comments', 'CommentsController@store');
-Route::get('/posts/{post}/edit', 'PostsController@update');
-Route::get('/posts/{post}/delete', 'PostsController@destroy');
+Route::get('/tags/{tag_slug}', 'TagsController@index');
+Route::get('/posts/tags/{tag_slug}', 'TagsController@show');
+Route::get('/posts/tags', 'TagsController@index');
+Route::get('/posts/{post_slug}', 'PostsController@show'); // must be last in Routing otherwise will be captcure all dir name, like create
+Route::post('/posts/{post_slug}/comments', 'CommentsController@store');
+Route::get('/posts/{post_slug}/edit', 'PostsController@update');
+Route::get('/posts/{post_slug}/delete', 'PostsController@destroy');
 
 Route::get('/quotes', 'QuotesController@index');
 Route::post('/quotes', 'QuotesController@store');

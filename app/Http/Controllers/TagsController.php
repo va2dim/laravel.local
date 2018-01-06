@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Tag;
 use Illuminate\Http\Request;
 
 class TagsController extends Controller
 {
+
+
     /**
-     * Display a listing of the resource.
+     * Display the specified resource.
      *
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function index(Tag $tag = null)
+    public function show(Tag $tag = null)
     {
         //dd($tag->posts);
         $posts = $tag->posts()->simplePaginate(2);
@@ -21,6 +25,20 @@ class TagsController extends Controller
         return view('posts.index', compact('posts'));
     }
 
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //$posts = $tag->posts()
+        //$tags = \App\Tag::has('posts')->pluck('name', 'id');
+        $tags = Tag::has('posts')->get();
+
+        return view('tags.index', compact('tags'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -43,16 +61,6 @@ class TagsController extends Controller
         // post /tasks
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // get /tasks/id
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -88,3 +96,4 @@ class TagsController extends Controller
         // DELETE
     }
 }
+
