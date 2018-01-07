@@ -6,7 +6,8 @@ use App\Comment;
 use App\Post;
 
 
-class CommentsController extends Controller
+class CommentsController
+  extends Controller
 {
 
 
@@ -17,9 +18,11 @@ class CommentsController extends Controller
             'body' => 'required|min:2',
         ]);
 
-        $post->addComment(request('user_id'), request('body'));
+        $post->addComment(request('user_id'), request('parent_id'), request('body'));
 
         //return redirect('/post/'.$this->post->id); // or in a simple way
         return back();
     }
+
+
 }

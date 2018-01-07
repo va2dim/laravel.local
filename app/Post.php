@@ -44,7 +44,7 @@ class Post extends Model
         return $this->BelongsTo(Category::class)->withDefault(); //withDefault() ?
     }
 
-    public function AddComment($user_id,  $body)
+    public function AddComment($user_id, $parent_id, $body)
     {
 /*
         Comment::create([
@@ -53,7 +53,12 @@ class Post extends Model
         ]);
 */
         //Eloquent have relationship - give you post_id, we can rewrite this more simple
-        $this->comments()->create(compact('user_id', 'body'));
+        $this->comments()->create(compact('user_id', 'parent_id', 'body'));
+    }
+
+    public function showComments()
+    {
+        return $this->comments->groupBy('parent_id');
     }
 
     public function scopeFilter($query, $filters)

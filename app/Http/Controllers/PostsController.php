@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Post;
@@ -35,8 +36,12 @@ class PostsController extends Controller
     public function show($post_slug)
     {
         $post = Post::where('slug', $post_slug)->first();
+        $post_comments = $post->showComments();
 
-        return view('posts.show', compact('post'));
+        //dd($post->comments);
+        //dd($comments);
+
+        return view('posts.show', compact('post', 'post_comments'));
     }
 
     public function update($post_slug)
